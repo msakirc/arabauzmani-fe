@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  height: 95%;
+  padding: 20%;
+
+}
+
+.container.main {
+  width: 60%;
+  height: 25%;
+  padding: 20%;
+  margin: 10%;
+
+}
+
+
+.container-arama {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  height: 60%;
+  padding: 20%;
+}
+
+.container-arama-list{
+  clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+  background-color: bisque;  
+}
