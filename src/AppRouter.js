@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
 import NotFoundPage from './components/NotFoundPage';
 import ArabaUzmani from './components/ArabaUzmani';
-import Ara from './components/Ara';
+import Ara from './components/ara/Ara';
 import Kesfet from './components/Kesfet';
 import ContactPage from './components/ContactPage';
 

@@ -6,28 +6,22 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Box';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import IconButton from '@material-ui/core/IconButton';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import DialogContent from '@material-ui/core/DialogContent';
 import Divider from '@material-ui/core/Divider';
 import Zoom from '@material-ui/core/Zoom';
-import ButtonBase from '@material-ui/core/ButtonBase';
+
+import { Avatar, DialogActions } from '@material-ui/core';
 
 import SwipeableViews from 'react-swipeable-views';
 
@@ -37,7 +31,6 @@ import SwipeableViews from 'react-swipeable-views';
 
 import palio from "../../public/images/Fiat_Palio_3door.jpg"
 import Car from '../models/Car';
-import { Avatar, DialogActions, Icon, Slide, StepContent } from '@material-ui/core';
 
 const images = [
   {
@@ -127,10 +120,6 @@ const useStyles = makeStyles((theme) => ({
     //   justifyContent: 'center',
   },
 
-  rightStep: {
-
-  },
-
   dialogCustomizedWidth: {
     width: '50vw',
     maxWidth: "60vw",
@@ -182,13 +171,24 @@ const useStyles = makeStyles((theme) => ({
     h6: {
       "fontSize": "2rem"
     }
+  },
+
+  mainBox: {
+    display:"flex",
+    justifyContent:"space-around",
+    marginTop:"20vh"
+  },
+
+  aracekle:{
+
   }
 }));
 
-export default Ara => {
+export default function Ara() {
 
   const [selectedCars, setCars] = useState([]);
 
+  const [selection, setValues] = useState([]);
   const [selectedMarka, setMarka] = useState()
   const [selectedModel, setModel] = useState()
   const [selectedYil, setYil] = useState()
@@ -219,6 +219,14 @@ export default Ara => {
     setYil(undefined);
     setVersiyon(undefined);
     setOpen(true);
+
+    
+    setValues({
+      marka: undefined,
+      model: undefined,
+      yil: undefined,
+      version: undefined
+    })
   };
 
   const handleClose = () => {
@@ -279,7 +287,7 @@ export default Ara => {
     }
   }
 
-  let cards = selectedCars.map((car, index) => (
+  const cards = selectedCars.map((car, index) => (
 
     <Card className={classes.card}  >
       <CardActionArea>
@@ -314,14 +322,6 @@ export default Ara => {
   return (
     <div className={classes.root} height="100vh" >
 
-      <button onClick={handleOpen} variant="contained" size="large" color="primary">
-        Open Modal
-      </button>
-
-      <p>{selectedMarka}</p>
-      <p>{selectedCars.length}</p>
-      {cards}
-
       <Dialog
         open={open}
         onClose={handleClose}
@@ -331,7 +331,7 @@ export default Ara => {
         keepMounted
         fullWidth
         classes={{ paperFullWidth: classes.dialogCustomizedWidth }}
-        TransitionComponent= {Zoom}
+        TransitionComponent={Zoom}
       >
         <DialogTitle >
           <Button
@@ -377,7 +377,7 @@ export default Ara => {
                   <List style={{ width: "60%" }} >
                     {items2.map((item, index) => (
 
-                      <ListItem button key={item} onClick={() => handleModelSelection(item)} divider={index != items.length - 1} style={{}}  >
+                      <ListItem button key={  } onClick={() => handleModelSelection(item)} divider={index != items.length - 1} style={{}}  >
                         <ListItemText
                           primary={
                             <Typography align="center" color="textPrimary">
@@ -485,6 +485,20 @@ export default Ara => {
 
 
       </Dialog>
+
+      <Box className={classes.mainBox}>
+        <Button className={classes.aracekle} onClick={handleOpen} variant="contained" size="large" color="primary" >
+          araç ekle
+        </Button>
+        <Button className={classes.karsilastir}  variant="contained" size="large" color="secondary" >
+          karşılaştır
+        </Button>
+      </Box>
+      <Box >
+        {cards}
+      </Box>
+
+
 
     </div >
   );
