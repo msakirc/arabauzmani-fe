@@ -27,7 +27,7 @@ const markalar = [
     "Wolkswagen",
     "Dacia",
     "Chevrolet",
-    "Seat",
+    "Seat"
 ]
 
 const modeller = [
@@ -82,7 +82,8 @@ export default function CarSelector({
     activeStep, setActiveStep,
     selectedMarka, setMarka,
     selectedModel, setModel,
-    selectedYil, setYil
+    selectedYil, setYil,
+    handleClose
 }) {
 
     const handleMarkaSelection = (item) => {
@@ -136,7 +137,7 @@ export default function CarSelector({
             <Step key={selectable} style={{ display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
                 {[...Array(columns)].map((col, index) => {
                     return (
-                        <List >
+                        <List style={{maxHeight: '100%', overflow: 'auto'}} >
                             {fillListItems(items.slice(columnSize * index, columnSize * (index + 1)), handler)}
                         </ List>
                     )
@@ -148,6 +149,7 @@ export default function CarSelector({
     function fillListItems(listItems, handler) {
         return listItems.map((item, index) => {
             return <ListItem button key={item} onClick={() => handler(item)} divider={index != listItems.length - 1}>
+                {console.log(item)}
                 <ListItemText
                     primary={
                         <Typography align="center" color="textPrimary" variant="h6" >

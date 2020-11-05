@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CarSelectDialog() {
+export default function CarSelectDialog({ open, setOpen }) {
 
 
 
@@ -52,7 +52,6 @@ export default function CarSelectDialog() {
     const [selectedYil, setYil] = useState()
     const [selectedCars, setCars] = useState([]);
 
-    const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
 
     const classes = useStyles();
@@ -101,7 +100,7 @@ export default function CarSelectDialog() {
         >
             <DialogTopLeftButton activeStep={activeStep} handleBack={handleBack} handleClose={handleClose} />
 
-            <DialogContent >
+            <DialogContent style={{ overflow: "hidden" }} >
                 <Grid
                     container
                     alignItems='center'
@@ -117,7 +116,6 @@ export default function CarSelectDialog() {
                             selectedMarka={selectedMarka} setMarka={setMarka}
                             selectedModel={selectedModel} setModel={setModel}
                             selectedYil={selectedYil} setYil={setYil}
-                            selectedCars={selectedCars} setCars={setCars}
                             handleClose={handleClose}
                         />
 
