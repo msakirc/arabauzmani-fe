@@ -75,11 +75,11 @@ export default function DialogBottomActions({
 
 
                 <Grid item >
-                    {!selectedCars.length &&
+                    {/* {!selectedCars.length && */}
                         <Button disabled={activeStep == 0} variant="contained" onClick={handleSelectedCar} color="secondary" size="large" style={{ marginRight: "2vw" }}>
                             {renderDialogSelectionButtonText(activeStep)}
                         </Button>
-                    }
+                    {/* } */}
                     {/* <Button disabled={activeStep == 0} variant="contained" onClick={handleSelectedCar} color="primary" size="large">
                         {activeStep == 0 ? "Bir seçim yapın" : "Karşılaştırmaya ekle"}
                     </Button> */}
