@@ -83,6 +83,7 @@ export default function CarSelector({
     selectedMarka, setMarka,
     selectedModel, setModel,
     selectedYil, setYil,
+    setVersiyon,
     handleClose
 }) {
 
@@ -102,7 +103,7 @@ export default function CarSelector({
     };
 
     const handleVersiyonSelection = (item) => {
-        // setVersiyon(item);
+        setVersiyon(item);
         setCars([...selectedCars, new Car(selectedMarka, selectedModel, selectedYil, item)])
         handleClose()
     };

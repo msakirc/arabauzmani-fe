@@ -30,7 +30,7 @@ import SwipeableViews from 'react-swipeable-views';
 
 
 import palio from "../../public/images/Fiat_Palio_3door.jpg"
-import Car from '../models/Car';
+import Car from '../src/models/Car';
 
 const images = [
   {

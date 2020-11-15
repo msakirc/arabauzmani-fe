@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AppRouter from './AppRouter';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 
@@ -38,6 +39,7 @@ const darkTheme =
 
 ReactDOM.render(
   <ThemeProvider theme={darkTheme}>
+    <CssBaseline />
     <AppRouter />
   </ThemeProvider>,
   document.getElementById('root')

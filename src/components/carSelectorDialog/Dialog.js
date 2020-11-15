@@ -43,16 +43,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CarSelectDialog({ open, setOpen }) {
-
-
-
-    const [selectedMarka, setMarka] = useState()
-    const [selectedModel, setModel] = useState()
-    const [selectedYil, setYil] = useState()
-    const [selectedCars, setCars] = useState([]);
-
-    const [activeStep, setActiveStep] = React.useState(0);
+export default function CarSelectDialog({ 
+    open, setOpen ,
+    activeStep, setActiveStep,
+    selectedMarka, setMarka,
+    selectedModel, setModel,
+    selectedYil, setYil,
+    selectedVersiyon, setVersiyon,
+    selectedCars, setCars
+}) {
 
     const classes = useStyles();
 
@@ -116,6 +115,7 @@ export default function CarSelectDialog({ open, setOpen }) {
                             selectedMarka={selectedMarka} setMarka={setMarka}
                             selectedModel={selectedModel} setModel={setModel}
                             selectedYil={selectedYil} setYil={setYil}
+                            setVersiyon={setVersiyon}
                             handleClose={handleClose}
                         />
 
