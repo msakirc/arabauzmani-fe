@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,8 +8,12 @@ import Step from '@material-ui/core/Step';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import SwipeableViews from 'react-swipeable-views';
+import useAxios from 'axios-hooks'
 
 import Car from '../../models/Car'
+import get from '../../requests/request';
+
+import { MARKALAR, FIND_ALL, MODELLER, YILLAR, VERSIYONLAR } from '../../requests/endpoints';
 
 const selectables = ["Marka", "Model", "Yıl", "Versiyon"]
 
@@ -84,26 +88,72 @@ export default function CarSelector({
     selectedModel, setModel,
     selectedYil, setYil,
     setVersiyon,
-    handleClose
+    open,
+    handleClose,
+    setMarkaSecili,
+    setModelSecili,
+    setYilSecili,
+    setVersiyonSecili,
 }) {
+    // const [markadata, setWeatherDetails] = useState(null) // <-- use null initial state
+
+    useEffect(() => {
+        console.log("useeffecte girdi")
+        if (!open)
+            return;
+        console.log("return olmadı")
+
+        if (activeStep === 0)
+            get(MARKALAR + FIND_ALL)
+                .then(data => {
+                    setMarkalar(data)
+                    console.log("çekili markalar:", markalar);
+                })
+    }, [])
+
+
+    const [markalar, setMarkalar] = useState(["Markalar yükleniyor."]);
+    const [modeller, setModeller] = useState(["Modeller yükleniyor."]);
+    const [yillar, setYillar] = useState(["Model yılları yükleniyor."]);
+    const [versiyonlar, setVersiyonlar] = useState(["Model versiyonları yükleniyor."]);
+
 
     const handleMarkaSelection = (item) => {
         setMarka(item);
+        setMarkaSecili(true)
+        get(MODELLER + FIND_ALL, { markaId: item.id })
+        .then(data => {
+            setModeller(data)
+            console.log("çekili modeller:", modeller);
+        })
         handleNext();
     };
 
     const handleModelSelection = (item) => {
         setModel(item);
+        setModelSecili(true)
+        get(YILLAR + FIND_ALL, { modelId: item.id })
+        .then(data => {
+            setYillar(data)
+            console.log("çekili yıllar:", yillar);
+        })
         handleNext();
     };
 
     const handleYilSelection = (item) => {
         setYil(item);
+        setYilSecili(true)
+        get(VERSIYONLAR + FIND_ALL, { yilId: item.id })
+        .then(data => {
+            setVersiyonlar(data)
+            console.log("çekili versiyonlar:", versiyonlar);
+        })
         handleNext();
     };
 
     const handleVersiyonSelection = (item) => {
         setVersiyon(item);
+        setVersiyonSecili(true)
         setCars([...selectedCars, new Car(selectedMarka, selectedModel, selectedYil, item)])
         handleClose()
     };
@@ -118,11 +168,11 @@ export default function CarSelector({
             case 0:
                 return "Tüm markalar";
             case 1:
-                return `Tüm ${selectedMarka} modelleri`;
+                return `Tüm ${selectedMarka.name} modelleri`;
             case 2:
-                return `Tüm ${selectedMarka} ${selectedModel} yılları`;
+                return `Tüm ${selectedMarka.name} ${selectedModel.name} yılları`;
             case 3:
-                return `Tüm ${selectedYil} ${selectedMarka} ${selectedModel} versiyonları`;
+                return `Tüm ${selectedYil.name} ${selectedMarka.name} ${selectedModel.name} versiyonları`;
             default:
                 return `${activeStep}`;
         }
@@ -138,7 +188,7 @@ export default function CarSelector({
             <Step key={selectable} style={{ display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
                 {[...Array(columns)].map((col, index) => {
                     return (
-                        <List style={{maxHeight: '100%', overflow: 'auto'}} >
+                        <List style={{ maxHeight: '100%', overflow: 'auto' }} >
                             {fillListItems(items.slice(columnSize * index, columnSize * (index + 1)), handler)}
                         </ List>
                     )
@@ -149,12 +199,12 @@ export default function CarSelector({
 
     function fillListItems(listItems, handler) {
         return listItems.map((item, index) => {
-            return <ListItem button key={item} onClick={() => handler(item)} divider={index != listItems.length - 1}>
-                {console.log(item)}
+            return <ListItem button key={item.id} onClick={() => handler(item)} divider={index != listItems.length - 1}>
+                {console.log("list item:", item)}
                 <ListItemText
                     primary={
                         <Typography align="center" color="textPrimary" variant="h6" >
-                            {item}
+                            {!!item.name ? item.name : item}
                         </Typography>}
                 />
             </ListItem>
@@ -164,7 +214,6 @@ export default function CarSelector({
     return (
 
         <Grid container alignItems='center' justifyContent='space-around' direction='column' >
-            {console.log(selectables)}
             <Typography variant="h4" >
                 {renderListTitle()}
             </Typography>

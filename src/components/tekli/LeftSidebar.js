@@ -72,31 +72,30 @@ export default function LeftSidebar({
     selectedYil,
     selectedVersiyon,
     setActiveStep,
-    setOpen
+    setOpen,
+    markaSecili, setMarkaSecili,
+    modelSecili, setModelSecili,
+    yilSecili, setYilSecili,
+    versiyonSecili, setVersiyonSecili
 }) {
     const classes = useStyles();
 
-    const markaSecili = !!selectedMarka && selectedMarka != 'Lütfen bir seçim yapın'
-    const modelSecili = !!selectedModel && selectedModel != 'undefined'
-    const yilSecili = !!selectedYil && selectedYil != 'undefined'
-    const versiyonSecili = !!selectedVersiyon && selectedVersiyon != 'undefined'
-    const img = modelSecili ? palio : markaSecili ? toyota : HalfCar
 
     const resetVersiyon = (newActiveStep) => {
-        selectedVersiyon = 'undefined'
+        setVersiyonSecili(false)
         setActiveStep(newActiveStep)
         setOpen(true)
     }
     const resetYil = (newActiveStep) => {
-        selectedYil = 'undefined'
+        setYilSecili(false)
         resetVersiyon(newActiveStep)
     }
     const resetModel = (newActiveStep) => {
-        selectedModel = 'undefined'
+        setModelSecili(false)
         resetYil(newActiveStep)
     }
     const resetMarka = (newActiveStep) => {
-        selectedModel = 'undefined'
+        setMarkaSecili(false)
         resetModel(newActiveStep)
     }
 

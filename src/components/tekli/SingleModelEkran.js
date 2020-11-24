@@ -132,10 +132,17 @@ const selectables = ["Marka", "Model", "Yıl", "Versiyon"]
 export default function SingleModelEkran() {
     const classes = useStyles();
 
-    const [selectedMarka, setMarka] = useState('Lütfen bir seçim yapın')
-    const [selectedModel, setModel] = useState('undefined')
-    const [selectedYil, setYil] = useState('undefined')
-    const [selectedVersiyon, setVersiyon] = useState('undefined')
+    const [selectedMarka, setMarka] = useState({ name: 'Lütfen bir seçim yapın' })
+    const [selectedModel, setModel] = useState( 'Seçim yapılmadı' )
+    const [selectedYil, setYil] = useState({ name: 'Seçim yapılmadı' })
+    const [selectedVersiyon, setVersiyon] = useState({ name: 'Seçim yapılmadı' })
+
+    const [markaSecili, setMarkaSecili] = useState(false)
+    const [modelSecili, setModelSecili] = useState(false)
+    const [yilSecili, setYilSecili] = useState(false)
+    const [versiyonSecili, setVersiyonSecili] = useState(false)
+
+
     const [selectedCars, setCars] = useState([]);
 
     const [open, setOpen] = React.useState(true);
@@ -151,6 +158,10 @@ export default function SingleModelEkran() {
                 activeStep={activeStep}
                 setActiveStep={setActiveStep}
                 setOpen={setOpen}
+                markaSecili={markaSecili} setMarkaSecili={setMarkaSecili}
+                modelSecili={modelSecili} setModelSecili={setModelSecili}
+                yilSecili={yilSecili} setYilSecili={setYilSecili}
+                versiyonSecili={versiyonSecili} setVersiyonSecili={setVersiyonSecili}
             />
             <div className={classes.mainContainer}>
 
@@ -194,6 +205,10 @@ export default function SingleModelEkran() {
                 selectedYil={selectedYil} setYil={setYil}
                 selectedVersiyon={selectedVersiyon} setVersiyon={setVersiyon}
                 selectedCars={selectedCars} setCars={setCars}
+                setMarkaSecili={setMarkaSecili}
+                setModelSecili={setModelSecili}
+                setYilSecili={setYilSecili}
+                setVersiyonSecili={setVersiyonSecili}
             />
         </div >
     )

@@ -50,7 +50,11 @@ export default function CarSelectDialog({
     selectedModel, setModel,
     selectedYil, setYil,
     selectedVersiyon, setVersiyon,
-    selectedCars, setCars
+    selectedCars, setCars,
+    setMarkaSecili,
+    setModelSecili,
+    setYilSecili,
+    setVersiyonSecili
 }) {
 
     const classes = useStyles();
@@ -117,6 +121,11 @@ export default function CarSelectDialog({
                             selectedYil={selectedYil} setYil={setYil}
                             setVersiyon={setVersiyon}
                             handleClose={handleClose}
+                            open={open}
+                            setMarkaSecili={setMarkaSecili}
+                            setModelSecili={setModelSecili}
+                            setYilSecili={setYilSecili}
+                            setVersiyonSecili={setVersiyonSecili}
                         />
 
                     </Grid>
