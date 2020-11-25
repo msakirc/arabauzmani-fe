@@ -93,7 +93,7 @@ export default function CarSelector({
     setMarkaSecili,
     setModelSecili,
     setYilSecili,
-    setVersiyonSecili,
+    setVersiyonSecili
 }) {
     // const [markadata, setWeatherDetails] = useState(null) // <-- use null initial state
 
@@ -155,7 +155,7 @@ export default function CarSelector({
         setVersiyon(item);
         setVersiyonSecili(true)
         setCars([...selectedCars, new Car(selectedMarka, selectedModel, selectedYil, item)])
-        handleClose()
+        handleClose(item)
     };
 
     const handleNext = () => {

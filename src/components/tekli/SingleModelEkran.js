@@ -44,7 +44,11 @@ import CarSelectDialog from '../carSelectorDialog/Dialog';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import LeftSidebar from './LeftSidebar';
+import GaugeChart from '../data-visualization/gauge';
 
+import get from '../../requests/request';
+
+import { MARKALAR, MODELLER, YILLAR, VERSIYONLAR, DETAIL } from '../../requests/endpoints';
 
 const images = [
     {
@@ -133,7 +137,7 @@ export default function SingleModelEkran() {
     const classes = useStyles();
 
     const [selectedMarka, setMarka] = useState({ name: 'Lütfen bir seçim yapın' })
-    const [selectedModel, setModel] = useState( 'Seçim yapılmadı' )
+    const [selectedModel, setModel] = useState('Seçim yapılmadı')
     const [selectedYil, setYil] = useState({ name: 'Seçim yapılmadı' })
     const [selectedVersiyon, setVersiyon] = useState({ name: 'Seçim yapılmadı' })
 
@@ -143,10 +147,55 @@ export default function SingleModelEkran() {
     const [versiyonSecili, setVersiyonSecili] = useState(false)
 
 
+    const [data, setData] = useState({});
+
     const [selectedCars, setCars] = useState([]);
 
     const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
+
+
+    const handleSelectionCompleted = (selectedVersiyon = "Seçim yapılmadı") => {
+        let requestTarget;
+        let requestId;
+
+        switch (activeStep) {
+            case 3:
+                if (selectedVersiyon && selectedVersiyon.id) {
+                    requestTarget = VERSIYONLAR
+                    requestId = selectedVersiyon.id
+                    break;
+                }
+            case 2:
+                if (selectedYil && selectedYil.id) {
+                    requestTarget = YILLAR
+                    requestId = selectedYil.id
+                    break;
+                }
+            case 1:
+                if (selectedModel && selectedModel.id) {
+                    requestTarget = MODELLER
+                    requestId = selectedModel.id
+                    break;
+                }
+            case 0:
+                if (selectedMarka && selectedMarka.id) {
+                    requestTarget = MARKALAR
+                    requestId = selectedMarka.id
+                    break;
+                }
+            default:
+                console.log("activestepte sıkıntı var", activeStep);
+                break;
+        }
+
+        get(requestTarget + DETAIL, { id: requestId })
+            .then(response => {
+                setData(response)
+                console.log("çekili data:", response);
+            })
+    }
+
 
     return (
         <div className={classes.root}>
@@ -168,31 +217,19 @@ export default function SingleModelEkran() {
                 <GridList cellHeight={160} cols={12} style={{ margin: 0 }}>
                     <GridListTile key="konfor" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
                         <p>Konfor Puanı</p>
-                        <CircularProgressbar
-                            value={66}
-                            text={`${66}%`}
-                        />
+                        <GaugeChart score={data.konforScore} />
                     </GridListTile>
                     <GridListTile key="estetik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
                         <p>Estetik Puanı</p>
-                        <CircularProgressbar
-                            value={66}
-                            text={`${66}%`}
-                        />
+                        <GaugeChart score={data.estetikScore} />
                     </GridListTile>
                     <GridListTile key="fp" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
                         <p>Fiyat/Değer Puanı</p>
-                        <CircularProgressbar
-                            value={66}
-                            text={`${66}%`}
-                        />
+                        <GaugeChart score={data.fpScore} />
                     </GridListTile>
                     <GridListTile key="overall" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
                         <p>Konfor Puanı</p>
-                        <CircularProgressbar
-                            value={66}
-                            text={`${66}%`}
-                        />
+                        <GaugeChart score={data.overallScore} />
                     </GridListTile>
                 </GridList>
             </div>
@@ -209,6 +246,7 @@ export default function SingleModelEkran() {
                 setModelSecili={setModelSecili}
                 setYilSecili={setYilSecili}
                 setVersiyonSecili={setVersiyonSecili}
+                handleSelectionCompleted={handleSelectionCompleted}
             />
         </div >
     )

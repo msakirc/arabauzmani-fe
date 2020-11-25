@@ -4,10 +4,8 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(() => ({
 
 
-}))
 
 export default function SidebarSelectionRow({
     selectedItem,
@@ -15,7 +13,7 @@ export default function SidebarSelectionRow({
     selectable,
     rowEditAction
 }) {
-    console.log("selected item : ", selectedItem)
+
     return (
         <>
             <Divider />
