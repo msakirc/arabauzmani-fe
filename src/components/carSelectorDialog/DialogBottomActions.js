@@ -46,11 +46,11 @@ export default function DialogBottomActions({
             case 0:
                 return "Bir seçim yapın"
             case 1:
-                return `${selectedMarka.name} hakkında bilgi al`;
+                return `${selectedMarka.name} modelleri hakkında genel bilgi al`;
             case 2:
-                return `${selectedModel.name} hakkında bilgi al`;
+                return `${selectedModel.name} kasaları hakkında genel bilgi al`;
             case 3:
-                return `Tüm ${selectedYil.name} ${selectedModel.name} hakkında bilgi al`;
+                return `Tüm ${selectedYil.name} ${selectedModel.name} versiyonları hakkında bilgi al`;
         }
     }
 

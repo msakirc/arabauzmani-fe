@@ -39,6 +39,10 @@ import 'react-circular-progressbar/dist/styles.css';
 import Chart from "react-apexcharts";
 
 export default function GaugeChart({ score, label }) {
+    if ( !score )
+        return (<></>);
+    
+
     const series = [ parseFloat(score) * 10]
     const options = {
         chart: {
