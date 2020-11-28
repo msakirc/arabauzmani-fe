@@ -36,13 +36,67 @@ import { Avatar, DialogActions, Grid } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import Chart from "react-apexcharts";
 
-export default function GaugeChart( { score }) {
+export default function GaugeChart({ score, label }) {
+    const series = [ parseFloat(score) * 10]
+    const options = {
+        chart: {
+            type: 'radialBar',
+        },
+        colors: ["#20E647"],
+
+        plotOptions: {
+            radialBar: {
+                startAngle: -135,
+                endAngle: 135,
+                dataLabels: {
+                    name: {
+                        fontSize: '1.75rem',
+                        color: "#ffffff",
+                        offsetY: 75
+                    },
+                    value: {
+                        offsetY: -5,
+                        fontSize: '2.25rem',
+                        color: "#ffffff",
+                        formatter: function (val) {
+                            return val / 10;
+                        }
+                    }
+                },
+                track: {
+                  background: '#585858'
+                }
+            }
+        },
+        fill: {
+            type: 'solid',
+            gradient: {
+                shade: 'dark',
+                shadeIntensity: 0.15,
+                inverseColors: false,
+                opacityFrom: 1,
+                opacityTo: 1,
+            },
+        },
+        stroke: {
+            dashArray: 3
+        },
+        labels: [label],
+    };
+
+
 
     return (
-        <CircularProgressbar
-            value={score*10}
-            text={`${score}`}
+        <Chart
+            options={options}
+            series={series}
+            // type="bar"
+            type="radialBar"
+            width="80%"
         />
+
+
     )
 }

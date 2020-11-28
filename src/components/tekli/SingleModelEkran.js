@@ -198,7 +198,7 @@ export default function SingleModelEkran() {
 
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} style={{ paddingTop:"1%" }}>
             <LeftSidebar
                 selectedMarka={selectedMarka}
                 selectedModel={selectedModel}
@@ -214,22 +214,24 @@ export default function SingleModelEkran() {
             />
             <div className={classes.mainContainer}>
 
-                <GridList cellHeight={160} cols={12} style={{ margin: 0 }}>
+                <GridList cellHeight={160} cols={18} style={{ margin: 0 }}>
+                    <GridListTile key="perf" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
+                        <GaugeChart score={data.performansScore} label="Performans" />
+                    </GridListTile>
                     <GridListTile key="konfor" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <p>Konfor Puanı</p>
-                        <GaugeChart score={data.konforScore} />
+                        <GaugeChart score={data.konforScore} label="Konfor" />
                     </GridListTile>
                     <GridListTile key="estetik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <p>Estetik Puanı</p>
-                        <GaugeChart score={data.estetikScore} />
+                        <GaugeChart score={data.estetikScore} label="Estetik"/>
                     </GridListTile>
-                    <GridListTile key="fp" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <p>Fiyat/Değer Puanı</p>
-                        <GaugeChart score={data.fpScore} />
+                    <GridListTile key="dayaniklilik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
+                        <GaugeChart score={data.dayaniklilikScore} label="Dayanıklılık" />
+                    </GridListTile>
+                    <GridListTile key="fiyat" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
+                        <GaugeChart score={data.fiyatScore} label="Fiyat" />
                     </GridListTile>
                     <GridListTile key="overall" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <p>Konfor Puanı</p>
-                        <GaugeChart score={data.overallScore} />
+                        <GaugeChart score={data.overallScore} label="Genel Puan" />
                     </GridListTile>
                 </GridList>
             </div>

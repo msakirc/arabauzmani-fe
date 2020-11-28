@@ -63,6 +63,21 @@ export default function CarSelectDialog({
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+        switch (prevActiveStep) {
+            case 3:
+                setVersiyon(undefined)
+                setVersiyonSecili(false)
+            case 2:
+                setYil(undefined)
+                setYilSecili(false)
+            case 1:
+                setModel(undefined)
+                setModelSecili(false)
+            default:
+                console.log("activestepte sıkıntı var handleBack", activeStep);
+                break;
+        }
     };
 
     const handleReset = () => {
@@ -76,6 +91,10 @@ export default function CarSelectDialog({
         setModel(undefined);
         setYil(undefined);
         setVersiyon(undefined);
+        setMarkaSecili(false);
+        setModelSecili(false);
+        setYilSecili(false);
+        setVersiyonSecili(false);
     };
 
     const handleClose = ( selectedVersiyon = "Seçim yapılmadı" ) => {
