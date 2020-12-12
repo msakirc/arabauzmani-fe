@@ -55,7 +55,8 @@ export default function CarSelectDialog({
     setModelSecili,
     setYilSecili,
     setVersiyonSecili,
-    handleSelectionCompleted
+    handleSelectionCompleted,
+    setDataLoaded
 }) {
 
     const classes = useStyles();
@@ -99,6 +100,7 @@ export default function CarSelectDialog({
 
     const handleClose = ( selectedVersiyon = "Seçim yapılmadı" ) => {
         handleSelectionCompleted(selectedVersiyon)
+        setDataLoaded(false)
         handleReset();
     };
 
@@ -148,6 +150,7 @@ export default function CarSelectDialog({
                             setYilSecili={setYilSecili}
                             setVersiyonSecili={setVersiyonSecili}
                             handleSelectionCompleted={handleSelectionCompleted}
+                            setDataLoaded={setDataLoaded}
                         />
 
                     </Grid>

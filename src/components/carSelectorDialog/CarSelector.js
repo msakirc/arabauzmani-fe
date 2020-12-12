@@ -93,7 +93,8 @@ export default function CarSelector({
     setMarkaSecili,
     setModelSecili,
     setYilSecili,
-    setVersiyonSecili
+    setVersiyonSecili,
+    setDataLoaded
 }) {
     // const [markadata, setWeatherDetails] = useState(null) // <-- use null initial state
 
@@ -112,20 +113,20 @@ export default function CarSelector({
     }, [])
 
 
-    const [markalar, setMarkalar] = useState(["Markalar yükleniyor."]);
-    const [modeller, setModeller] = useState(["Modeller yükleniyor."]);
-    const [yillar, setYillar] = useState(["Model yılları yükleniyor."]);
-    const [versiyonlar, setVersiyonlar] = useState(["Model versiyonları yükleniyor."]);
+    const [markalar, setMarkalar] = useState([{ name: "Markalar yükleniyor." }]);
+    const [modeller, setModeller] = useState([{ name: "Modeller yükleniyor." }]);
+    const [yillar, setYillar] = useState([{ name: "Model yılları yükleniyor." }]);
+    const [versiyonlar, setVersiyonlar] = useState([{ name: "Model versiyonları yükleniyor." }]);
 
 
     const handleMarkaSelection = (item) => {
         setMarka(item);
         setMarkaSecili(true)
         get(MODELLER + FIND_ALL, { markaId: item.id })
-        .then(data => {
-            setModeller(data)
-            console.log("çekili modeller:", modeller);
-        })
+            .then(data => {
+                setModeller(data)
+                console.log("çekili modeller:", modeller);
+            })
         handleNext();
     };
 
@@ -133,10 +134,10 @@ export default function CarSelector({
         setModel(item);
         setModelSecili(true)
         get(YILLAR + FIND_ALL, { modelId: item.id })
-        .then(data => {
-            setYillar(data)
-            console.log("çekili yıllar:", yillar);
-        })
+            .then(data => {
+                setYillar(data)
+                console.log("çekili yıllar:", yillar);
+            })
         handleNext();
     };
 
@@ -144,10 +145,10 @@ export default function CarSelector({
         setYil(item);
         setYilSecili(true)
         get(VERSIYONLAR + FIND_ALL, { yilId: item.id })
-        .then(data => {
-            setVersiyonlar(data)
-            console.log("çekili versiyonlar:", versiyonlar);
-        })
+            .then(data => {
+                setVersiyonlar(data)
+                console.log("çekili versiyonlar:", versiyonlar);
+            })
         handleNext();
     };
 
@@ -160,6 +161,7 @@ export default function CarSelector({
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setDataLoaded(false)
     };
 
 
@@ -180,6 +182,9 @@ export default function CarSelector({
 
     function prepareStepContent(selectable, items, handler) {
 
+        if (!items)
+            return <></>
+
         let listSize = items.length
         let columns = Math.ceil(listSize / 12)
         let columnSize = Math.ceil(listSize / columns)
@@ -199,7 +204,7 @@ export default function CarSelector({
 
     function fillListItems(listItems, handler) {
         return listItems.map((item, index) => {
-            return <ListItem button key={item.id} onClick={() => handler(item)} divider={index != listItems.length - 1}>
+            return <ListItem button key={item.id} onClick={() => handler(item)} divider={index != listItems.length - 1} disabled={item.name.includes("yükleniyor")}>
                 {console.log("list item:", item)}
                 <ListItemText
                     primary={

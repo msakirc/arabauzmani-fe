@@ -45,44 +45,27 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import LeftSidebar from './LeftSidebar';
 import GaugeChart from '../data-visualization/gauge';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 import get from '../../requests/request';
 
 import { MARKALAR, MODELLER, YILLAR, VERSIYONLAR, DETAIL } from '../../requests/endpoints';
-
-const images = [
-    {
-        url: '/static/images/grid-list/breakfast.jpg',
-        title: 'Breakfast',
-        width: '40%',
-    },
-    {
-        url: '/static/images/grid-list/burgers.jpg',
-        title: 'Burgers',
-        width: '30%',
-    },
-    {
-        url: '/static/images/grid-list/camera.jpg',
-        title: 'Camera',
-        width: '30%',
-    },
-];
+import gridsizer from '../utils/gridsizer';
+import Puanlar from './Puanlar';
+import MarkaInfo from './MarkaInfo';
 
 
 const useStyles = makeStyles((theme) => ({
 
     root: {
-        // width: "100vw",
-        // height: "100vh",
-        // background: "linear-gradient(180deg, #4d4d4d 0%, #303030 100%)"
+
     },
     mainContainer: {
-        width: "80%",
-        marginLeft: "20%",
+        width: "78%",
+        marginLeft: "21%",
+        marginRight: "1%",
     },
-    gridList: {
-        margin: "0px"
-    },
+
     tileRoot: {
 
     },
@@ -94,40 +77,13 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center"
     },
 
-    fieldTile: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "flex-end"
+    typography: {
+        margin: theme.spacing(2),
+        marginBottom: theme.spacing(4),
     },
 
-    selectionTile: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "flex-start"
-    },
-
-    titleBar: {
-        paddingLeft: "10%",
-        paddingRight: "10%",
-        background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-            'rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 0%)',
-    },
-
-    gridTitle: {
-        fontSize: "1.5rem"
-    },
-
-    gridSubtitle: {
-        fontSize: "1.1rem"
-    },
-
-
-    icon: {
-        color: 'rgba(255, 255, 255, 0.54)',
-        backgroundColor: 'rgba(255, 255, 255, 0.54)',
+    divider: {
+        margin: theme.spacing(4),
     },
 }))
 
@@ -148,12 +104,12 @@ export default function SingleModelEkran() {
 
 
     const [data, setData] = useState({});
+    const [dataLoaded, setDataLoaded] = useState(false);
 
     const [selectedCars, setCars] = useState([]);
 
     const [open, setOpen] = React.useState(true);
     const [activeStep, setActiveStep] = React.useState(0);
-
 
     const handleSelectionCompleted = (selectedVersiyon = "Seçim yapılmadı") => {
         let requestTarget;
@@ -185,20 +141,20 @@ export default function SingleModelEkran() {
                     break;
                 }
             default:
-                console.log("activestepte sıkıntı var", activeStep);
                 break;
         }
 
         get(requestTarget + DETAIL, { id: requestId })
             .then(response => {
                 setData(response)
+                setDataLoaded(true)
                 console.log("çekili data:", response);
             })
     }
 
 
     return (
-        <div className={classes.root} style={{ paddingTop:"1%" }}>
+        <div className={classes.root} style={{ paddingTop: "1%" }}>
             <LeftSidebar
                 selectedMarka={selectedMarka}
                 selectedModel={selectedModel}
@@ -211,29 +167,40 @@ export default function SingleModelEkran() {
                 modelSecili={modelSecili} setModelSecili={setModelSecili}
                 yilSecili={yilSecili} setYilSecili={setYilSecili}
                 versiyonSecili={versiyonSecili} setVersiyonSecili={setVersiyonSecili}
+                dataLoaded={dataLoaded}
+                data={data}
             />
             <div className={classes.mainContainer}>
+                <Puanlar
+                    open={open}
+                    selectedMarka={selectedMarka}
+                    selectedModel={selectedModel}
+                    selectedYil={selectedYil}
+                    selectedVersiyon={selectedVersiyon}
+                    markaSecili={markaSecili}
+                    modelSecili={modelSecili}
+                    yilSecili={yilSecili}
+                    versiyonSecili={versiyonSecili}
+                    data={data}
+                />
 
-                <GridList cellHeight={160} cols={18} style={{ margin: 0 }}>
-                    <GridListTile key="perf" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.performansScore} label="Performans" />
-                    </GridListTile>
-                    <GridListTile key="konfor" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.konforScore} label="Konfor" />
-                    </GridListTile>
-                    <GridListTile key="estetik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.estetikScore} label="Estetik"/>
-                    </GridListTile>
-                    <GridListTile key="dayaniklilik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.dayaniklilikScore} label="Dayanıklılık" />
-                    </GridListTile>
-                    <GridListTile key="fiyat" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.fiyatScore} label="Fiyat" />
-                    </GridListTile>
-                    <GridListTile key="overall" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} >
-                        <GaugeChart score={data.overallScore} label="Genel Puan" />
-                    </GridListTile>
-                </GridList>
+                <Divider variant="middle" className={classes.divider} />
+
+                <MarkaInfo
+                    open={open}
+                    selectedMarka={selectedMarka}
+                    selectedModel={selectedModel}
+                    selectedYil={selectedYil}
+                    selectedVersiyon={selectedVersiyon}
+                    markaSecili={markaSecili}
+                    modelSecili={modelSecili}
+                    yilSecili={yilSecili}
+                    versiyonSecili={versiyonSecili}
+                    data={data}
+                    dataLoaded={dataLoaded}
+                />
+                <Divider variant="middle" className={classes.divider} />    
+
             </div>
 
             <CarSelectDialog
@@ -249,6 +216,7 @@ export default function SingleModelEkran() {
                 setYilSecili={setYilSecili}
                 setVersiyonSecili={setVersiyonSecili}
                 handleSelectionCompleted={handleSelectionCompleted}
+                setDataLoaded={setDataLoaded}
             />
         </div >
     )

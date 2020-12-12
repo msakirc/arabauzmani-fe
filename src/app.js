@@ -33,7 +33,7 @@ const darkTheme =
         label: {
           "fontSize": "3rem"
         },
-      }
+      },
     }) 
   );
 

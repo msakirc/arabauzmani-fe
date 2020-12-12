@@ -76,7 +76,9 @@ export default function LeftSidebar({
     markaSecili, setMarkaSecili,
     modelSecili, setModelSecili,
     yilSecili, setYilSecili,
-    versiyonSecili, setVersiyonSecili
+    versiyonSecili, setVersiyonSecili,
+    dataLoaded,
+    data
 }) {
     const classes = useStyles();
 
@@ -116,6 +118,9 @@ export default function LeftSidebar({
                     selectableIndex={0}
                     selectable={selectables[0]}
                     rowEditAction={resetMarka}
+                    dataLoaded={dataLoaded}
+                    showFlag={true}
+                    data={data}
                 />
             }
             {
