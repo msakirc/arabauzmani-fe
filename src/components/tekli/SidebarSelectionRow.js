@@ -78,7 +78,7 @@ export default function SidebarSelectionRow({
                 {showFlag && dataLoaded &&
                     <Tooltip title={getCountryTooltip()}>
 
-                        <Grid item className={classes.flag} style={{ minWidth: 30 }} >
+                        <Grid item className={classes.flag} style={{ minWidth: 30, placeSelf: "center" }} >
                             <img src={getSvg()} alt={"marka"} style={{ objectFit: 'scale-down', height: "100%" }} />
                         </Grid>
                     </Tooltip>
