@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-export const API_URL = 'http://localhost:5959'
+export const API_URL = 'https://arabauzmani.ue.r.appspot.com/'
 
 export default async function get(url, params) {
     console.log(url, params);
