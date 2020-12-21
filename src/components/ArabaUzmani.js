@@ -106,7 +106,7 @@ export default ArabaUzmani => {
       {images.map((image, index) => (
         <ButtonBase
           component={Link}
-          to={index == 0 ? "/ara" : "/kesfet"}
+          to={index == 0 ? "/single" : "/kesfet"}
           focusRipple
           key={image.title}
           className={classes.image}
