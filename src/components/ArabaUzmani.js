@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -11,7 +11,16 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import HalfCar from "../../public/images/half-car.jpg"
 import Bridge from "../../public/images/bridge.jpg"
 
+import get from '../requests/request';
+import { HEALTH_CHECK } from '../requests/endpoints';
+
 export default ArabaUzmani => {
+
+
+  useEffect(() => {
+    get(HEALTH_CHECK)
+  }, [])
+
 
   const images = [
     {

@@ -12,3 +12,5 @@ export const DETAIL = "/detail";
 export const QUERY = "/query";
 export const COMPARE = "/compare";
 export const VOTE = "/vote";
+
+export const HEALTH_CHECK = "/actuator/health";
