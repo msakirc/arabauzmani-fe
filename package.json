@@ -12,8 +12,8 @@
   "homepage": "https://github.com/msakirc/arabauzmani-fe#readme",
   "scripts": {
     "serve": "live-server public/",
-    "build": "webpack",
-    "build.firebase": "webpack",
+    "build": "webpack --mode development",
+    "build.firebase": "yarn install --frozen-lockfile && webpack",
     "dev-server": "webpack-dev-server --config webpack.config.js --hot --inline"
   },
   "dependencies": {
