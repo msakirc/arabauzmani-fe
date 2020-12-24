@@ -8,7 +8,7 @@ import countriesJson from "../../dictionaries/countriesJson"
 import { Typography } from '@material-ui/core';
 
 
-import storage from '../firebase/init-firebase'
+import storage from '../../firebase/init-firebase'
 import '@firebase/storage';
 
 const useStyles = makeStyles((theme) => ({
