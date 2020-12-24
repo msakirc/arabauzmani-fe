@@ -8,6 +8,9 @@ import countriesJson from "../../dictionaries/countriesJson"
 import { Typography } from '@material-ui/core';
 
 
+import storage from '../firebase/init-firebase'
+import '@firebase/storage';
+
 const useStyles = makeStyles((theme) => ({
     flag: {
         marginLeft: theme.spacing(1),
@@ -42,12 +45,12 @@ export default function SidebarSelectionRow({
 
         if (!dataLoaded)
             return
-
+            
         let code = getCountryCode()
         if (!!code)
-            return "../../../public/images/countries/" + code.toLowerCase() + ".svg"
-        return "../../../public/images/countries/global.svg"
-
+            return storage.ref("assets/countries/" + code.toLowerCase() + ".svg").getDownloadURL()
+        
+        return storage.ref("assets/countries/global.svg").getDownloadURL()
     }
 
     function getCountryTooltip() {

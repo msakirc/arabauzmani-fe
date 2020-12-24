@@ -8,14 +8,15 @@ import Typography from '@material-ui/core/Typography';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-import HalfCar from "../../public/images/half-car.jpg"
-import Bridge from "../../public/images/bridge.jpg"
-
 import get from '../requests/request';
 import { HEALTH_CHECK } from '../requests/endpoints';
 
+import storage from '../firebase/init-firebase'
+import '@firebase/storage';
+
 export default ArabaUzmani => {
 
+  // const storage = firebase.storage
 
   useEffect(() => {
     get(HEALTH_CHECK)
@@ -24,12 +25,12 @@ export default ArabaUzmani => {
 
   const images = [
     {
-      url: "../../public/images/half-car.jpg",
+      url: storage.ref('assets/half-car.jpg').getDownloadURL(),
       title: 'Belirli bir model ara',
       width: '50%'
     },
     {
-      url: "../../public/images/bridge.jpg",
+      url: storage.ref('assets/bridge.jpg').getDownloadURL(),
       title: 'Sana en uygun modelleri keşfet',
       width: '50%'
     }
