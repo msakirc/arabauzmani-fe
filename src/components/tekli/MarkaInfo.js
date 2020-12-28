@@ -185,8 +185,8 @@ export default function MarkaInfo({
     }
 
     return (
-        <div style={{ display: "block" }}>
-            <div style={{ display: "block" }}>
+        <div style={{ display: "flex" }}>
+            <div style={{ display: "block", width:"67%" }}>
 
                 <Typography gutterBottom className={classes.typography} variant="h5" >{header()}</Typography>
 
@@ -211,8 +211,16 @@ export default function MarkaInfo({
             </div>
             <div style={{ display: "block" }}>
 
-                <Typography gutterBottom className={classes.typography} variant="h5" >Euro NCAP Güvenlik Değerlendirmesi</Typography>
-                
+
+            <Typography gutterBottom className={classes.typography} variant="h5" >Euro NCAP Güvenlik Değerlendirmesi</Typography>
+                <GridList
+                    //  className={classes.container}
+                    cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
+
+                    <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <Rating readOnly name="ncap" defaultValue={0} max={5} style={{ fontSize: "3rem" }} />
+                    </GridListTile>
+                </GridList>
             </div>
         </div>
     )

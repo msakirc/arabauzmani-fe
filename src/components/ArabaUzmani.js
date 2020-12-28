@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -11,35 +11,42 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import get from '../requests/request';
 import { HEALTH_CHECK } from '../requests/endpoints';
 
-import storage from '../firebase/init-firebase'
-import '@firebase/storage';
+import firebase from '../firebase/init-firebase'
 
 export default ArabaUzmani => {
 
-  // const storage = firebase.storage
-
-  useEffect(() => {
-    get(HEALTH_CHECK)
-  }, [])
-
-
+  const storage = firebase.default.storage()
   const images = [
     {
-      url: storage.ref('assets/half-car.jpg').getDownloadURL(),
+      url: 'assets/half-car.jpg',
       title: 'Belirli bir model ara',
       width: '50%'
     },
     {
-      url: storage.ref('assets/bridge.jpg').getDownloadURL(),
+      url: 'assets/bridge.jpg',
       title: 'Sana en uygun modelleri keşfet',
       width: '50%'
     }
   ];
 
+  const [firstImage, setFirstImage] = useState()
+  const [secondImage, setSecondImage] = useState()
+
+  useEffect(() => {
+    get(HEALTH_CHECK)
+
+    storage.ref(images[0].url).getDownloadURL().then( url => { 
+      setFirstImage( url ) 
+    } )
+    storage.ref(images[1].url).getDownloadURL().then( url => { 
+      setSecondImage( url ) 
+    } )
+    
+  }, [])
+
   const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-      flexWrap: 'wrap',
       minWidth: 300,
       width: '100%',
     },
@@ -109,27 +116,26 @@ export default ArabaUzmani => {
     },
   }));
 
-
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
-      {images.map((image, index) => (
-        <ButtonBase
+      <ButtonBase
           component={Link}
-          to={index == 0 ? "/single" : "/kesfet"}
+          to={"/single"}
           focusRipple
-          key={image.title}
+          key={images[0].title}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           style={{
-            width: image.width,
+            width: "50vw",
             height: "100vh"
           }}
         >
           <span
             className={classes.imageSrc}
             style={{
-              backgroundImage: `url(${image.url})`,
+              backgroundImage: `url(${firstImage})`,
             }}
           />
           <span className={classes.imageBackdrop} />
@@ -141,52 +147,43 @@ export default ArabaUzmani => {
               className={classes.imageTitle}
               style={{ fontSize: "3rem" }}
             >
-              {image.title}
+              {images[0].title}
               <span className={classes.imageMarked} />
             </Typography>
           </span>
         </ButtonBase>
-      ))}
-    </div>
-  );
-
-
-
-
-
-
-
-
-
-  return (
-    <div>
-      {/* <div className="container">
-
-          <Button component={Link} to="/ara" fullWidth="true" variant="contained" size="large" color="primary">
-            Primary
-          </Button>
-          <Button component={Link} to="/kesfet" variant="contained" fullWidth="true" size="large" color="secondary" >
-            Secondary
-          </Button>
-
-        </div> */}
-
-      {
-        <Grid container spacing={3} justify="space-evenly" alignItems="center" style={{ minHeight: '100vh' }} >
-
-          <Grid item >
-            <Button component={Link} to="/ara" xs={12} sm={6} fullWidth={true} variant="contained" size="large" color="primary">
-              Belirli bir model ara
-                </Button>
-          </Grid>
-          <Grid item >
-            <Button component={Link} to="/kesfet" xs={12} sm={6} variant="contained" size="large" color="secondary" >
-              Sana en uygun modelleri keşfet
-            </Button>
-          </Grid>
-        </Grid>
-      }
-
+        <ButtonBase
+          component={Link}
+          to={"/kesfet"}
+          focusRipple
+          key={images[1].title}
+          className={classes.image}
+          focusVisibleClassName={classes.focusVisible}
+          style={{
+            width: "50vw",
+            height: "100vh"
+          }}
+        >
+          <span
+            className={classes.imageSrc}
+            style={{
+              backgroundImage: `url(${secondImage})`,
+            }}
+          />
+          <span className={classes.imageBackdrop} />
+          <span className={classes.imageButton}>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              color="inherit"
+              className={classes.imageTitle}
+              style={{ fontSize: "3rem" }}
+            >
+              {images[1].title}
+              <span className={classes.imageMarked} />
+            </Typography>
+          </span>
+        </ButtonBase>
     </div>
   );
 }
