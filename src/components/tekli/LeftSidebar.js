@@ -36,10 +36,6 @@ import { Avatar, DialogActions, Grid } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 
 
-import HalfCar from "../../../public/images/half-car.jpg"
-import palio from "../../../public/images/Fiat_Palio_3door.jpg"
-import corolla from "../../../public/images/Corolla-sedan.jpg"
-import toyota from "../../../public/images/toyota.png"
 import Car from '../../models/Car';
 import CarSelectDialog from '../carSelectorDialog/Dialog';
 import { CircularProgressbar } from 'react-circular-progressbar';

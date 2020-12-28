@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -6,10 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import countriesJson from "../../dictionaries/countriesJson"
 import { Typography } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Fade from '@material-ui/core/Fade';
 
-
-import storage from '../../firebase/init-firebase'
-import '@firebase/storage';
+import firebase from '../../firebase/init-firebase'
 
 const useStyles = makeStyles((theme) => ({
     flag: {
@@ -30,7 +30,25 @@ export default function SidebarSelectionRow({
 }) {
 
     const classes = useStyles();
+    const storage = firebase.default.storage()
     const countries = Object.entries(countriesJson).map(([key, value]) => ({ code: key, name: value }));
+
+    const [flag, setFlag] = useState()
+    const [flagLoaded, setFlagLoaded] = useState(false)
+
+    useEffect(() => {
+        if (!dataLoaded) {
+            setFlagLoaded(false)
+            return
+        }
+
+        let code = getCountryCode()
+        if (!!code)
+            storage.ref("assets/countries/" + code.toLowerCase() + ".svg").getDownloadURL().then(url => setFlag(url))
+
+        // storage.ref("assets/countries/global.svg").getDownloadURL().then( url => setFlag(url) )
+
+    }, [dataLoaded]);
 
     function getCountryCode() {
         if (!dataLoaded)
@@ -39,18 +57,6 @@ export default function SidebarSelectionRow({
             return data.marka.countryOfOrigin
 
         return data.countryOfOrigin
-    }
-
-    function getSvg() {
-
-        if (!dataLoaded)
-            return
-            
-        let code = getCountryCode()
-        if (!!code)
-            return storage.ref("assets/countries/" + code.toLowerCase() + ".svg").getDownloadURL()
-        
-        return storage.ref("assets/countries/global.svg").getDownloadURL()
     }
 
     function getCountryTooltip() {
@@ -71,6 +77,12 @@ export default function SidebarSelectionRow({
 
         return countries.find((country) => country.code === countryCode).name.name_tr
     }
+
+    function handleImageLoaded() {
+        console.log("giriyo olm işte")
+        setFlagLoaded(true)
+    }
+
     return (
         <>
             <Divider />
@@ -82,7 +94,18 @@ export default function SidebarSelectionRow({
                     <Tooltip title={getCountryTooltip()}>
 
                         <Grid item className={classes.flag} style={{ minWidth: 30, placeSelf: "center" }} >
-                            <img src={getSvg()} alt={"marka"} style={{ objectFit: 'scale-down', height: "100%" }} />
+
+
+                            <Fade
+                                in={!flagLoaded}
+                                unmountOnExit
+                            >
+                                <CircularProgress size={20} />
+                            </Fade>
+
+                            <img src={flag} alt={"marka"} onLoad={() => handleImageLoaded()}
+                                style={{ objectFit: 'scale-down', height: "100%", visibility: flagLoaded ? "visible" : "hidden" }}
+                            />
                         </Grid>
                     </Tooltip>
                 }

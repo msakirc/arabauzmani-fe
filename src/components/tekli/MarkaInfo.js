@@ -31,6 +31,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 
+import Rating from '@material-ui/lab/Rating';
 
 import { Avatar, DialogActions, Grid } from '@material-ui/core';
 
@@ -184,28 +185,43 @@ export default function MarkaInfo({
     }
 
     return (
-        <>
-            <Typography gutterBottom className={classes.typography} variant="h5" >{header()}</Typography>
+        <div style={{ display: "flex" }}>
+            <div style={{ display: "block", width:"67%" }}>
+
+                <Typography gutterBottom className={classes.typography} variant="h5" >{header()}</Typography>
 
 
-            <GridList
-            //  className={classes.container}
-              cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
+                <GridList
+                    //  className={classes.container}
+                    cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
 
-                <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding : 0 }}>
-                    <GaugeChart score={getMalzemeKalitesiScore()} label="Malzeme Kalitesi" />
-                </GridListTile>
-                <GridListTile key="servisAgi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding : 0 }}>
-                    <GaugeChart score={getServisScore()} label="Servis Ağı" />
-                </GridListTile>
-                <GridListTile key="yedekParca" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding : 0 }}>
-                    <GaugeChart score={getYedekParcaScore()} label="Yedek Parça" />
-                </GridListTile>
-                <GridListTile key="guvenlik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding : 0 }}>
-                    <GaugeChart score={getGuvenlikScore()} label="Güvenlik" />
-                </GridListTile>
-            </GridList>
+                    <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <GaugeChart score={getMalzemeKalitesiScore()} label="Malzeme Kalitesi" />
+                    </GridListTile>
+                    <GridListTile key="servisAgi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <GaugeChart score={getServisScore()} label="Servis Ağı" />
+                    </GridListTile>
+                    <GridListTile key="yedekParca" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <GaugeChart score={getYedekParcaScore()} label="Yedek Parça" />
+                    </GridListTile>
+                    <GridListTile key="guvenlik" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <GaugeChart score={getGuvenlikScore()} label="Güvenlik" />
+                    </GridListTile>
+                </GridList>
+            </div>
+            <div style={{ display: "block" }}>
 
-        </>
+
+            <Typography gutterBottom className={classes.typography} variant="h5" >Euro NCAP Güvenlik Değerlendirmesi</Typography>
+                <GridList
+                    //  className={classes.container}
+                    cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
+
+                    <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
+                        <Rating readOnly name="ncap" defaultValue={0} max={5} style={{ fontSize: "3rem" }} />
+                    </GridListTile>
+                </GridList>
+            </div>
+        </div>
     )
 }
