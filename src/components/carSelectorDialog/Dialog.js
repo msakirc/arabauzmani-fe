@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function CarSelectDialog({ 
-    open, setOpen ,
+export default function CarSelectDialog({
+    open, setOpen,
     activeStep, setActiveStep,
     selectedMarka, setMarka,
     selectedModel, setModel,
@@ -98,7 +98,7 @@ export default function CarSelectDialog({
         setVersiyonSecili(false);
     };
 
-    const handleClose = ( selectedVersiyon = "Seçim yapılmadı" ) => {
+    const handleClose = (selectedVersiyon = "Seçim yapılmadı") => {
         handleSelectionCompleted(selectedVersiyon)
         setDataLoaded(false)
         handleReset();
@@ -123,6 +123,9 @@ export default function CarSelectDialog({
             maxWidth="md"
             classes={{ paper: classes.dialogPaper }}
             TransitionComponent={Zoom}
+
+            disableBackdropClick
+            disableEscapeKeyDown
         >
             <DialogTopLeftButton activeStep={activeStep} handleBack={handleBack} handleClose={handleClose} />
 

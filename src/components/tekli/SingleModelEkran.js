@@ -53,6 +53,7 @@ import { MARKALAR, MODELLER, YILLAR, VERSIYONLAR, DETAIL } from '../../requests/
 import gridsizer from '../utils/gridsizer';
 import Puanlar from './Puanlar';
 import MarkaInfo from './MarkaInfo';
+import GenelBakis from './GenelBakis';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -171,6 +172,22 @@ export default function SingleModelEkran() {
                 data={data}
             />
             <div className={classes.mainContainer}>
+
+                <GenelBakis
+                    open={open}
+                    selectedMarka={selectedMarka}
+                    selectedModel={selectedModel}
+                    selectedYil={selectedYil}
+                    selectedVersiyon={selectedVersiyon}
+                    markaSecili={markaSecili}
+                    modelSecili={modelSecili}
+                    yilSecili={yilSecili}
+                    versiyonSecili={versiyonSecili}
+                    data={data}
+                />
+
+                <Divider variant="middle" className={classes.divider} />
+
                 <Puanlar
                     open={open}
                     selectedMarka={selectedMarka}
@@ -199,7 +216,7 @@ export default function SingleModelEkran() {
                     data={data}
                     dataLoaded={dataLoaded}
                 />
-                <Divider variant="middle" className={classes.divider} />    
+                <Divider variant="middle" className={classes.divider} />
 
             </div>
 

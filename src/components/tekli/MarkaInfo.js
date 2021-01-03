@@ -53,11 +53,10 @@ import Image from 'material-ui-image'
 import get from '../../requests/request';
 
 import { MARKALAR, MODELLER, YILLAR, VERSIYONLAR, DETAIL } from '../../requests/endpoints';
-import gridsizer from '../utils/gridsizer';
+import { oneThirdSize, twoThirdSize, fullRowSize } from '../utils/gridsizer';
 // import countries_in_turkish from '../utils/countries_in_turkish';
 
 import countriesJson from "../../dictionaries/countriesJson"
-import GridSizer from '../utils/gridsizer';
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -107,7 +106,7 @@ export default function MarkaInfo({
         if (markaSecili)
             finalString += selectedMarka.name + " "
 
-        finalString += " bilgileri"
+        finalString += " markası için kullanıcılarımızın puanları"
         return finalString
     }
 
@@ -185,15 +184,22 @@ export default function MarkaInfo({
     }
 
     return (
-        <div style={{ display: "flex" }}>
-            <div style={{ display: "block", width:"67%" }}>
+
+        <GridList
+            //  className={classes.container}
+            cellHeight={220} 
+            cols={fullRowSize} style={{ margin: 0 }}>
+
+            <div style={{ display: "block" }}>
 
                 <Typography gutterBottom className={classes.typography} variant="h5" >{header()}</Typography>
 
 
                 <GridList
                     //  className={classes.container}
-                    cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
+                    cellHeight={160} 
+                    cols={twoThirdSize}
+                    style={{ margin: 0 }}>
 
                     <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
                         <GaugeChart score={getMalzemeKalitesiScore()} label="Malzeme Kalitesi" />
@@ -212,16 +218,19 @@ export default function MarkaInfo({
             <div style={{ display: "block" }}>
 
 
-            <Typography gutterBottom className={classes.typography} variant="h5" >Euro NCAP Güvenlik Değerlendirmesi</Typography>
+                <Typography gutterBottom className={classes.typography} variant="h5" >Euro NCAP Güvenlik Değerlendirmesi</Typography>
                 <GridList
                     //  className={classes.container}
-                    cellHeight={160} cols={GridSizer} style={{ margin: 0 }}>
+                    cellHeight={160} 
+                    cols={oneThirdSize} 
+                    style={{ margin: 0 }}>
 
                     <GridListTile key="malzemeKalitesi" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding: 0 }}>
                         <Rating readOnly name="ncap" defaultValue={0} max={5} style={{ fontSize: "3rem" }} />
                     </GridListTile>
                 </GridList>
             </div>
-        </div>
+
+        </GridList >
     )
 }

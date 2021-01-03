@@ -15,6 +15,7 @@ function DialogTopLeftButton(props) {
                 startIcon={props.activeStep != 0 ? <ArrowBackIcon /> : ""}
                 color="primary"
                 size="large"
+                disabled={props.activeStep === 0}
             >
                 <Typography variant="h6">
                     {props.activeStep === 0 ? "İptal" : `${selectables[props.activeStep - 1]} seçimine geri dön`}
