@@ -51,7 +51,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import get from '../../requests/request';
 
 import { MARKALAR, MODELLER, YILLAR, VERSIYONLAR, DETAIL } from '../../requests/endpoints';
-import gridsizer from '../utils/gridsizer';
+import { fullRowSize } from '../utils/gridsizer';
 
 
 
@@ -104,7 +104,7 @@ export default function Puanlar({
         if (versiyonSecili)
             finalString += selectedVersiyon.name + " "
 
-        finalString += "puanları"
+        finalString += "için kullanıcılarımızın puanları"
         return finalString
     }
 
@@ -113,7 +113,7 @@ export default function Puanlar({
             <Typography gutterBottom className={classes.typography} variant="h5" >{header()}</Typography>
 
 
-            <GridList cellHeight={160} cols={gridsizer} style={{ margin: 0 }}>
+            <GridList cellHeight={160} cols={fullRowSize} style={{ margin: 0 }}>
                 <GridListTile key="perf" cols={3} rows={1} classes={{ root: classes.tileRoot, tile: classes.tile }} style={{ margin: 0, padding : 0 }}>
                     <GaugeChart score={data.performansScore} label="Performans" />
                 </GridListTile>

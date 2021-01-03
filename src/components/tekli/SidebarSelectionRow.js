@@ -79,7 +79,6 @@ export default function SidebarSelectionRow({
     }
 
     function handleImageLoaded() {
-        console.log("giriyo olm işte")
         setFlagLoaded(true)
     }
 
